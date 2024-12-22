@@ -1,16 +1,22 @@
 package fi.margokomarova.week10.task1.entity;
 
 import fi.margokomarova.week10.task1.exception.WrongLoginException;
+import fi.margokomarova.week10.task1.exception.WrongLoginOrPasswordException;
 import fi.margokomarova.week10.task1.exception.WrongPasswordException;
+
+import java.util.HashMap;
 
 public class Account {
     private String login;
     private String password;
     private String confirmation;
+    private HashMap<String, String> loginPassword;
 
-    //public Account (String login){
-    //this.login=login;
-    //}
+    public void setLoginPassword(HashMap<String, String> loginPassword) {
+        this.loginPassword = loginPassword;
+    }
+
+
     public void checkLogin(String login) throws WrongLoginException {
         if (login == null) {
             throw new WrongLoginException("Fill in login");
@@ -33,5 +39,20 @@ public class Account {
         }
         this.password = password;
     }
+
+    public void checkLoginAndPassword(String login, String password) throws WrongLoginOrPasswordException{
+        if (loginPassword.containsKey(login)){
+            if (loginPassword.containsValue(password)){
+                System.out.println("You successfully got into account");
+            }else{
+                throw new WrongLoginOrPasswordException("Wrong password");
+            }
+        }
+        else{throw new WrongLoginOrPasswordException ("Wrong login or password");
+            }
+
+        }
+
+
 
 }
